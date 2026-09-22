@@ -1,12 +1,8 @@
 import { useScrollAnimation, buildWhatsAppUrl } from '../hooks/useAnimations';
-import gearCamera1 from '../assets/gear_camera_1.jpg';
-import gearCamera2 from '../assets/gear_camera_2.jpg';
 import gearCamera3 from '../assets/gear_camera_3.jpg';
-import gearCamera4 from '../assets/gear_camera_4.jpg';
 import gearLens from '../assets/gear_lens.jpg';
 import gearLighting from '../assets/gear_lighting.jpg';
 import gearGimbal from '../assets/gear_gimbal.jpg';
-import gearDrone from '../assets/gear_drone.jpg';
 import './GearRentals.css';
 
 const gearItems = [

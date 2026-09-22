@@ -62,7 +62,7 @@ export default function Services() {
   const { ref, isVisible } = useScrollAnimation(0.1);
   const [hoveredEventId, setHoveredEventId] = useState<string | null>(null);
   const [expandedEvent, setExpandedEvent] = useState<typeof events[0] | null>(null);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMouseEnter = (eventId: string) => {
     setHoveredEventId(eventId);

@@ -1,6 +1,5 @@
 import { useCountUp } from '../hooks/useAnimations';
 import heroBg from '../assets/hero_bg.jpg';
-import logo from '../assets/new_logo.png';
 import './Hero.css';
 
 const stats = [
