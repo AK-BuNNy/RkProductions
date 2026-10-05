@@ -100,7 +100,7 @@
 .gear__card-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding-top: 14px;
   border-top: 1px solid var(--border-subtle);
   margin-top: auto;
@@ -127,6 +127,7 @@
 .gear__card-btn {
   padding: 8px 20px;
   font-size: 0.75rem;
+  width: 100%;
 }
 
 /* Responsive */

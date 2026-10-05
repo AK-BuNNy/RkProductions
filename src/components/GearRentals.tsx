@@ -10,26 +10,20 @@ const gearItems = [
     id: 'fx3',
     name: 'Sony FX3',
     category: 'Cinema Camera',
-    price: '₹5,000',
-    pricePer: '/day',
     image: gearCamera3, // Reusing existing import for camera
     specs: ['4K 120fps', 'Full Frame', 'Dual Base ISO'],
   },
   {
-    id: 'lens-70-200',
-    name: 'Sony FE 70-200mm f/2.8 GM',
+    id: 'lenses',
+    name: 'Sony Lenses',
     category: 'Lenses',
-    price: '₹2,500',
-    pricePer: '/day',
     image: gearLens, // Reusing existing import for lens
-    specs: ['G Master Quality', 'Fast Autofocus', 'E-Mount'],
+    specs: ['Multiple lenses available', 'Prime & Zoom Options', 'Cinema & Photo Lenses'],
   },
   {
     id: 'gimbal-rs5',
     name: 'DJI RS 5',
     category: 'Stabilizer',
-    price: '₹3,000',
-    pricePer: '/day',
     image: gearGimbal, // Reusing existing import for gimbal
     specs: ['Heavy Payload', 'LiDAR Autofocus', 'Carbon Fiber Build'],
   },
@@ -37,8 +31,6 @@ const gearItems = [
     id: 'lighting-kit',
     name: 'Pro Lighting Setup',
     category: 'Lighting',
-    price: '₹4,000',
-    pricePer: '/day',
     image: gearLighting, // Reusing existing import for lighting
     specs: ['High CRI LEDs', 'Softboxes', 'C-Stands Included'],
   },
@@ -90,10 +82,6 @@ export default function GearRentals() {
                   ))}
                 </ul>
                 <div className="gear__card-footer">
-                  <div className="gear__card-price">
-                    <span className="gear__price-value">{item.price}</span>
-                    <span className="gear__price-per">{item.pricePer}</span>
-                  </div>
                   <button
                     className="btn btn--primary gear__card-btn"
                     onClick={() => handleEnquiry(item.name)}
