@@ -109,33 +109,85 @@
 .services__card-media {
   position: relative;
   height: 240px;
-  background: #000;
+  background: #0d0d0d;
   overflow: hidden;
 }
 
-.services__card-video {
+/* 1. Thumbnail Image (displayed before hover) */
+.services__card-thumbnail {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.7;
-  transition: opacity var(--transition-base);
-}
-
-.services__card.hovered .services__card-video {
   opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  z-index: 1;
 }
 
-.services__card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.8;
-  transition: transform 0.5s ease, opacity var(--transition-base);
-}
-
-.services__card.hovered .services__card-img {
-  opacity: 1;
+.services__card.hovered .services__card-thumbnail {
   transform: scale(1.05);
+}
+
+/* When hover video plays, smoothly hide the thumbnail */
+.services__card-thumbnail--fade {
+  opacity: 0 !important;
+}
+
+/* Fallback placeholder if no thumbnail image is provided */
+.services__card-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1f1f1f 0%, #0d0d0d 100%);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  z-index: 1;
+}
+
+/* 2. Hover Video Preview */
+.services__card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.services__card-video--active {
+  opacity: 1;
+}
+
+.services__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--bg-card) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.services__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  border: 1px solid var(--border-accent);
+  z-index: 4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .services__play-pill {
@@ -153,38 +205,17 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  z-index: 2;
+  z-index: 4;
   transition: all 0.3s ease;
+  opacity: 0.85;
 }
 
-.services__card.hovered .services__play-pill {
+.services__card.hovered .services__play-pill,
+.services__play-pill--hovered {
+  opacity: 1;
   background: var(--accent-gold);
   color: #000;
   transform: scale(1.05);
-}
-
-.services__card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, var(--bg-card) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.services__badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(8px);
-  padding: 6px 12px;
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-  border: 1px solid var(--border-accent);
-  z-index: 2;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 /* Card Content */

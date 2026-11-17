@@ -7,14 +7,16 @@ export interface EventItem {
   title: string;
   category: string;
   description: string;
+  // Thumbnail image shown on the card before hover (e.g. /thumbnails/cover.jpg)
+  thumbnail?: string;
   // Supports: Google Drive preview/view links, YouTube, Vimeo, or direct MP4/WebM files
   videoSrc: string;
   // Optional lightweight teaser (e.g. 1-3MB MP4) for card hover preview
   previewSrc?: string;
-  // Optional custom poster/thumbnail image
+  // Optional alias for thumbnail
   poster?: string;
   tags: string[];
-  gallery: string[];
+  gallery?: string[];
 }
 
 export interface VideoSourceInfo {
@@ -76,45 +78,33 @@ export function parseVideoSource(url: string): VideoSourceInfo {
 const events: EventItem[] = [
   {
     id: 'doc-1',
-    title: 'The Mountain Journey',
-    category: 'Documentary',
-    description: 'A compelling visual narrative capturing real stories with cinematic depth in the heart of the Himalayas. Shot entirely on RED V-Raptor.',
+    title: 'KAANALIN THAAGAM',
+    category: 'Short Film',
+    description: 'Every frame tells a story, every moment captures an emotion. Through cinematic visuals, creative cinematography, and thoughtful storytelling, this short film brings ideas and emotions to life, creating an immersive experience that connects with the audience.',
+    thumbnail: '/thumbnails/kaanalin-thaagam_thump.png',
     videoSrc: '/videos/kaanalin thaagam teaser.mp4',
     previewSrc: '/videos/kaanalin thaagam teaser_hover.mp4',
-    tags: ['Narrative', 'Wildlife', '8K', 'Post-Production'],
-    gallery: [
-      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1542224566-6e85f2e6772f?auto=format&fit=crop&w=800&q=80'
-    ]
+    tags: ['Cinematic', 'Short Film', 'Drama', 'Emotional'],
   },
   {
     id: 'comm-1',
-    title: 'Speed & Style',
-    category: 'Commercial',
-    description: 'High-impact commercial content that elevates the brand. Studio and on-location shoots with premium production value for Porsche.',
+    title: 'More than just a property, it’s a lifestyle.',
+    category: 'Real Estate',
+    description: 'A cinematic showcase of exceptional architecture, elegant interiors, and thoughtfully designed spaces. Captured with a creative eye to bring every detail and experience to life.',
+    thumbnail: '/thumbnails/real estate thump1.png',
     videoSrc: '/videos/1768709495680465 (2).mp4',
     previewSrc: '/videos/1768709495680465 (2)_hover.mp4',
-    tags: ['TVC', 'Automotive', 'Action', 'Brand Films'],
-    gallery: [
-      'https://images.unsplash.com/photo-1503376712353-c045b5465224?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80'
-    ]
+    tags: ['Cinematic', 'Real Estate', 'Architecture', 'Interior Design'],
   },
   {
     id: 'conc-1',
-    title: 'Neon Nights',
-    category: 'Mega Concert',
-    description: 'Multi-camera live event coverage for the Coldplay concert in Mumbai. We captured every moment with an 8-camera setup.',
+    title: 'Every property has a story. We make it unforgettable.',
+    category: 'Real Estate',
+    description: 'A cinematic showcase of exceptional architecture, elegant interiors, and thoughtfully designed spaces. Captured with a creative eye to bring every detail and experience to life.',
+    thumbnail: '/thumbnails/Video-23653_thump.png',
     videoSrc: '/videos/Video-23653.mp4',
     previewSrc: '/videos/Video-23653_hover.mp4',
-    tags: ['Multi-Cam', 'Live Music', 'Aerial', 'Stage Coverage'],
-    gallery: [
-      'https://images.unsplash.com/photo-1540039155733-d7696d4eb98b?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1470229722913-7c090be5f524?auto=format&fit=crop&w=800&q=80'
-    ]
+    tags: ['Cinematic', 'Real Estate', 'Architecture', 'Interior Design'],
   }
 ];
 
@@ -122,49 +112,57 @@ function CardMedia({ event, isHovered }: { event: EventItem; isHovered: boolean 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const videoInfo = parseVideoSource(event.videoSrc);
   const directVideoUrl = event.previewSrc || (videoInfo.type === 'direct' ? event.videoSrc : null);
-  const posterImg = event.poster || videoInfo.thumbnailUrl || (event.gallery && event.gallery[0]);
+  const thumbnailImg = event.thumbnail || event.poster || videoInfo.thumbnailUrl || (event.gallery && event.gallery[0]);
 
   useEffect(() => {
     if (!videoRef.current) return;
-    if (isHovered) {
+    if (isHovered && directVideoUrl) {
       videoRef.current.play().catch(() => { });
     } else {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
-  }, [isHovered]);
+  }, [isHovered, directVideoUrl]);
 
   return (
     <div className="services__card-media">
-      {directVideoUrl ? (
+      {/* 1. Static Thumbnail (Visible before hover) */}
+      {thumbnailImg ? (
+        <img
+          src={thumbnailImg}
+          alt={event.title}
+          className={`services__card-thumbnail ${isHovered && directVideoUrl ? 'services__card-thumbnail--fade' : ''}`}
+          loading="lazy"
+        />
+      ) : (
+        <div className="services__card-placeholder">
+          <span>{event.title}</span>
+        </div>
+      )}
+
+      {/* 2. Hover Video Preview (Cross-fades in and plays on hover) */}
+      {directVideoUrl && (
         <video
           ref={videoRef}
           src={directVideoUrl}
-          poster={posterImg}
           muted
           loop
           playsInline
           preload="metadata"
-          className="services__card-video"
-        />
-      ) : (
-        <img
-          src={posterImg}
-          alt={event.title}
-          className="services__card-img"
-          loading="lazy"
+          className={`services__card-video ${isHovered ? 'services__card-video--active' : ''}`}
         />
       )}
+
+      {/* Gradient Vignette Overlay & Badges */}
       <div className="services__card-overlay" />
       <div className="services__badge">{event.category}</div>
-      {videoInfo.type !== 'direct' && !event.previewSrc && (
-        <div className="services__play-pill">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-          <span>Watch</span>
-        </div>
-      )}
+
+      <div className={`services__play-pill ${isHovered ? 'services__play-pill--hovered' : ''}`}>
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        <span>{directVideoUrl && isHovered ? 'Playing' : 'Preview'}</span>
+      </div>
     </div>
   );
 }
@@ -280,6 +278,7 @@ export default function Services() {
                 {videoInfo.type === 'direct' ? (
                   <video
                     src={expandedEvent.videoSrc}
+                    poster={expandedEvent.thumbnail || expandedEvent.poster}
                     controls
                     autoPlay
                     muted={false}
@@ -312,12 +311,21 @@ export default function Services() {
 
                 <p className="services__modal-desc">{expandedEvent.description}</p>
 
-                <h4 className="services__gallery-title">Event Gallery</h4>
-                <div className="services__gallery">
-                  {expandedEvent.gallery.map((img, index) => (
-                    <img key={index} src={img} alt={`Gallery image ${index + 1}`} loading="lazy" />
-                  ))}
-                </div>
+                {Boolean(expandedEvent.gallery && expandedEvent.gallery.length > 0) && (
+                  <>
+                    <h4 className="services__gallery-title">Event Gallery</h4>
+                    <div className="services__gallery">
+                      {expandedEvent.gallery!.map((img, index) => (
+                        <img
+                          key={index}
+                          src={img}
+                          alt={`Gallery image ${index + 1}`}
+                          loading="lazy"
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
