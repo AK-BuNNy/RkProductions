@@ -1,7 +1,15 @@
 import { useScrollAnimation } from '../hooks/useAnimations';
 import './Testimonials.css';
 
-const testimonials = [
+interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  text: string;
+  rating: number;
+}
+
+const testimonials: Testimonial[] = [
   // {
   //   id: 1,
   //   name: 'Arjun Mehta',
