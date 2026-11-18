@@ -2,27 +2,27 @@ import { useScrollAnimation } from '../hooks/useAnimations';
 import './Testimonials.css';
 
 const testimonials = [
-  {
-    id: 1,
-    name: 'Arjun Mehta',
-    role: 'Independent Filmmaker',
-    text: 'RK Production transformed our documentary with their exceptional cinematography. The gear quality and crew expertise are unmatched in Bangalore. They understand the craft deeply.',
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: 'Priya Sharma',
-    role: 'Creative Director, BrandWave',
-    text: 'We\'ve worked with RK Production on 12+ commercials. Their attention to detail, lighting setups, and post-production quality consistently exceed our expectations. Truly world-class.',
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: 'Vikram Rao',
-    role: 'Event Producer, LiveNation India',
-    text: 'Their concert coverage is spectacular. Multi-camera setups, aerial shots, and live editing — all handled seamlessly. The team delivered a 48-hour turnaround on a major festival.',
-    rating: 5,
-  },
+  // {
+  //   id: 1,
+  //   name: 'Arjun Mehta',
+  //   role: 'Independent Filmmaker',
+  //   text: 'RK Production transformed our documentary with their exceptional cinematography. The gear quality and crew expertise are unmatched in Bangalore. They understand the craft deeply.',
+  //   rating: 5,
+  // },
+  // {
+  //   id: 2,
+  //   name: 'Priya Sharma',
+  //   role: 'Creative Director, BrandWave',
+  //   text: 'We\'ve worked with RK Production on 12+ commercials. Their attention to detail, lighting setups, and post-production quality consistently exceed our expectations. Truly world-class.',
+  //   rating: 5,
+  // },
+  // {
+  //   id: 3,
+  //   name: 'Vikram Rao',
+  //   role: 'Event Producer, LiveNation India',
+  //   text: 'Their concert coverage is spectacular. Multi-camera setups, aerial shots, and live editing — all handled seamlessly. The team delivered a 48-hour turnaround on a major festival.',
+  //   rating: 5,
+  // },
 ];
 
 function StarIcon() {
